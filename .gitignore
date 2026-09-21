@@ -1,0 +1,45 @@
+# Go build / Node artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.o
+*.a
+go.work
+go.work.sum
+
+# Node / TypeScript (client/ and tools/)
+node_modules/
+client/dist/
+client/.output/
+client/.tsbuildinfo
+*.local
+
+# PocketBase runtime data (NOT committed — generated at runtime)
+pb_data/
+pb_hooks/builds/
+__pouch_bs__
+
+# Environment secrets (keep .env.example committed; ignore actual .env)
+.env
+
+# IDEs & OS
+.idea/
+.vscode/
+*.swp
+.SWP
+.DS_Store
+Thumbs.db
+
+# Test / build artifacts
+coverage*.out
+*.test
+*.prof
+
+# Tooling
+.tsup/
+.esbuild/
+
+# Local application binaries
+/pabetoop-club

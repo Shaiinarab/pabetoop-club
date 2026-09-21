@@ -1,0 +1,16 @@
+.git
+.github
+.bmad
+.env
+.env.*
+!.env.example
+pb_data
+pabetoop-club
+client/node_modules
+client/dist
+node_modules
+coverage
+*.log
+
+# Standalone Rust operations utility; built and distributed outside the service image.
+tools/

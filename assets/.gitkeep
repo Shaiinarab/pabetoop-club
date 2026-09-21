@@ -1,0 +1,3 @@
+# Ensure the self-hosted assets directory is tracked in git.
+# Implementer adds: fonts/ (Vazirmatn/Lalezar), css/tailwind.css, htmx dist,
+# generated tailwind output and client bundle. NO external CDNs (per AGENTS.md).

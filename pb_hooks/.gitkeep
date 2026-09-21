@@ -1,0 +1,3 @@
+// Ensure the JSVM hooks directory is tracked in git.
+// Real hooks (contracts.cjs, acwr.cjs, trials.cjs) are added by the implementing
+// agent per .bmad/task-queue.json (T06/T07/T09). Do NOT delete this file.

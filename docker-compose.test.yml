@@ -1,0 +1,36 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pabetoop-club:test
+    ports:
+      - "${TEST_APP_PORT:-8091}:8090"
+    environment:
+      APP_ENV: test
+      SEED_DEMO: "1"
+      STUB: "1"
+      PAYMENT_PROVIDER: test
+      ZARINPAL_MERCHANT_ID: ""
+      ZARINPAL_SANDBOX: "1"
+      ZARINPAL_CALLBACK_BASE_URL: "http://localhost:${TEST_APP_PORT:-8091}"
+    volumes:
+      - pb_test_data:/app/pb_data
+    init: true
+    restart: "no"
+    stop_grace_period: 20s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 200
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8090/_healthz"]
+      interval: 15s
+      timeout: 5s
+      start_period: 20s
+      retries: 5
+
+volumes:
+  pb_test_data:
+    name: pabetoop_club_test_pb_data

@@ -1,0 +1,8 @@
+# Sandbox-only override. Ordinary Linux deployments should use docker-compose.test.yml
+# by itself. The sandbox Docker daemon cannot create bridge firewall networks.
+services:
+  app:
+    build:
+      network: host
+    network_mode: host
+    ports: !reset []

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-labelledby="title desc">
+  <title id="title">Club portal icon</title>
+  <desc id="desc">Abstract mark for the family portal: a ball on a stylised pitch</desc>
+  <rect width="192" height="192" rx="42" fill="#164b38"/>
+  <rect x="30" y="30" width="132" height="132" rx="18" fill="none" stroke="#f2c94c" stroke-width="4" opacity=".55"/>
+  <line x1="96" y1="30" x2="96" y2="162" stroke="#f2c94c" stroke-width="4" opacity=".55"/>
+  <circle cx="96" cy="96" r="52" fill="#f2c94c"/>
+  <path d="M96 44 116 59l-6 24H82l-6-24 20-15Zm-35 26 23 8 8 24-18 18-21-15 8-35Zm70 0 8 35-21 15-18-18 8-24 23-8Zm-58 51 23-16 23 16-8 26H81l-8-26Z" fill="#164b38"/>
+  <circle cx="96" cy="96" r="80" fill="none" stroke="#f2c94c" stroke-width="6"/>
+</svg>
