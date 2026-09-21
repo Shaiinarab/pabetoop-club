@@ -59,6 +59,72 @@ jobs:
         working-directory: ./client
         run: npx tsgo --noEmit --strict
 
+  template:
+    name: Template integrity (re-brand and boot)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: true
+
+      # `make run` once never started the server at all — it called the binary with
+      # no `serve` subcommand, so PocketBase printed its root help and exited 0 — and
+      # once it did start, a duplicated route registration panicked the mux on the
+      # first request. Both were invisible to build, vet and every test. This job
+      # boots a re-branded copy and reads the bytes it serves.
+      # A script with a shebang but no executable bit is invisible until someone runs
+      # it the way the docs say to — `./tools/instantiate.sh` — and gets "Permission
+      # denied". This guards the regression as the scripts move around.
+      - name: Check shell scripts are executable
+        run: |
+          set -euo pipefail
+          bad=0
+          while IFS= read -r f; do
+            head -c2 "$f" | grep -q '#!' || continue
+            if [ ! -x "$f" ]; then
+              echo "::error file=$f::has a shebang but is not executable"
+              bad=1
+            fi
+          done < <(git ls-files '*.sh' '*.bash')
+          [ "$bad" -eq 0 ] || { echo "a documented entrypoint is not executable"; exit 1; }
+          echo "all shell scripts are executable"
+
+      - name: Re-brand a throwaway copy
+        run: |
+          cp -a . /tmp/fork
+          cd /tmp/fork
+          tools/instantiate.sh \
+            --name "CI Fork Club" \
+            --name-fa "باشگاه آزمایشی" \
+            --short-fa "آ" \
+            --tagline-fa "آزمایش" \
+            --module-path github.com/example/ci-fork-club \
+            --binary ci-fork-club
+
+      - name: Boot the fork and assert it serves its own brand
+        working-directory: /tmp/fork
+        run: |
+          set -euo pipefail
+          export NO_PROXY=127.0.0.1,localhost
+          STUB=1 PORT=18090 make run > /tmp/fork-run.log 2>&1 &
+          for _ in $(seq 1 60); do
+            curl -sf -o /dev/null http://127.0.0.1:18090/_healthz && break || sleep 1
+          done
+          curl -sf -o /dev/null http://127.0.0.1:18090/_healthz
+          # a duplicate route registration panics while the mux is built, and only
+          # ever surfaces on the first request — never at build time
+          ! grep -qi "panic" /tmp/fork-run.log
+          # the PWA manifest is rendered from the active brand profile, so it is the
+          # cheapest proof that the operator's identity reached the process
+          curl -sf http://127.0.0.1:18090/assets/manifest.webmanifest > /tmp/manifest.json
+          grep -q "باشگاه آزمایشی" /tmp/manifest.json
+          ! grep -q "پابهتوپ" /tmp/manifest.json
+          echo "the fork served its own brand"
+
   docker:
     name: Container image builds
     runs-on: ubuntu-latest
