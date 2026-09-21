@@ -103,8 +103,18 @@ docker compose up -d --build
 Requires Go 1.26+ (Node 22+ only if you touch `client/`).
 
 ```bash
+cp .env.example .env        # same file the Docker path reads — edit the SITE_* block
 go mod download
-SEED_DEMO=1 STUB=1 go run ./cmd/app serve --http=127.0.0.1:8090
+make run                    # loads .env, then starts :8090 in stub mode
+```
+
+`make run` sources `tools/load-env.sh`, so the branding you put in `.env` actually reaches the
+process. Do not shortcut this with `. ./.env` — that is a trap for any value containing a space:
+`SITE_NAME=Riverside FC` makes the shell try to run `FC`, and the variable silently becomes
+`Riverside`. To run the binary yourself:
+
+```bash
+ENV_FILE=./.env . ./tools/load-env.sh && SEED_DEMO=1 STUB=1 go run ./cmd/app serve --http=127.0.0.1:8090
 ```
 
 ### Verify it works

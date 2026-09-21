@@ -17,8 +17,8 @@ client:
 build: deps
 	go build -trimpath -o pabetoop-club ./cmd/app
 
-run: build   ## run dev server (stub mode)
-	STUB=1 ./pabetoop-club
+run: build   ## run dev server (stub mode), loading .env for SITE_* branding
+	@ENV_FILE=./.env . ./tools/load-env.sh; STUB=1 exec ./pabetoop-club serve --http=127.0.0.1:$(PORT)
 
 dev: client  ## watch TS
 	@cd client && npx tsgo --watch

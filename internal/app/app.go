@@ -69,7 +69,9 @@ func registerPublicRoutes(e *core.ServeEvent) {
 		return re.FileFS(os.DirFS("assets"), "js/sw.js")
 	})
 	e.Router.GET("/assets/{path...}", apis.Static(os.DirFS("assets"), false))
-	e.Router.GET("/assets/manifest.webmanifest", manifestHandler)
+	// More specific than the /assets/{path...} wildcard above, so it wins for this exact path.
+	// Register exactly once: net/http's ServeMux panics on a duplicate pattern, and the panic
+	// happens while the mux is built — i.e. on the first request, not at build time.
 	e.Router.GET("/assets/manifest.webmanifest", manifestHandler)
 
 	e.Router.GET("/_healthz", func(re *core.RequestEvent) error {
