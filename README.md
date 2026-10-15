@@ -1,5 +1,6 @@
 # Pabetoop Club
-
+[![Architecture diagram of shaiinarab/pabetoop-club](https://gitdiagram.com/shaiinarab/pabetoop-club/diagram.png)](https://gitdiagram.com/shaiinarab/pabetoop-club?utm_source=readme&utm_medium=picture)
+[![Architecture diagram](https://gitdiagram.com/diagram-badge.svg)](https://gitdiagram.com/shaiinarab/pabetoop-club?utm_source=readme&utm_medium=badge)
 **A white-label membership, subscription and billing platform for sports clubs and
 academies.** One Go binary, one SQLite file, a Persian RTL web UI, and no club name
 anywhere in the source.
