@@ -9,6 +9,10 @@ anywhere in the source.
 ![Go](https://img.shields.io/badge/Go-1.26-00ADD8?logo=go)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
+> **See it before you install it** → [**live static demo**](https://shaiinarab.github.io/pabetoop-club/).
+> Real pages rendered from the seeded demo data — landing, manager dashboard and family
+> portal — served by GitHub Pages. Nothing to run; forms and payments are inert there.
+
 > **Taking this live for your own club?** → [`docs/ADOPTING.md`](docs/ADOPTING.md) walks the whole
 > path end to end: re-brand it in one command, run it locally, put your members and payments in,
 > deploy it, and the traps that actually bite.
